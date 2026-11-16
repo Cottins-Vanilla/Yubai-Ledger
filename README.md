@@ -2,7 +2,7 @@
   <img src="docs/assets/logo.svg" width="96" height="96" alt="Yubai Ledger logo">
 </p>
 
-<h1 align="center">Yubai Ledger</h1>
+<h1 align="center">余白 · Yubai Ledger</h1>
 
 <p align="center">简洁、离线、可备份的 Android 记账应用</p>
 
@@ -24,7 +24,7 @@
   <a href="https://github.com/Cottins-Vanilla/Yubai-Ledger/issues/new/choose">反馈问题</a>
 </p>
 
-Yubai Ledger 使用 **Kotlin + Jetpack Compose + Room** 构建，以本地账本为核心，提供清晰收支、退款关联与自主备份。由 **Clottins Vanilla** 设计维护，采用 **MIT License**。
+**余白（Yubai Ledger）** 使用 **Kotlin + Jetpack Compose + Room** 构建，以本地账本为核心，提供清晰收支、退款关联与自主备份。由 **Clottins Vanilla** 设计维护，采用 **MIT License**。
 
 > 无需注册 · 本地存储 · 整数金额 · 原生 Android 界面
 
@@ -89,9 +89,9 @@ Yubai Ledger 使用 **Kotlin + Jetpack Compose + Room** 构建，以本地账本
 
 ## 安装
 
-1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `Yubai-Ledger-v1.0.2.apk`。
+1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `Yubai-Ledger-v1.0.3.apk`。
 2. 如系统询问，允许当前下载应用安装未知来源软件，再安装 APK。
-3. 从“设置 → 期初余额”录入现有余额，然后开始记账。
+3. 安装后桌面名称为“余白”，图标为 B「轻盈钱包」。从“设置 → 期初余额”录入现有余额，然后开始记账。
 
 后续同包名、同签名 APK 可覆盖升级。自行编译的 Debug 版与公开 Release 版签名不同，切换前先导出备份；不能直接覆盖安装时，不要在未备份前卸载。
 

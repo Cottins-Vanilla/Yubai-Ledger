@@ -12,6 +12,11 @@
       "failures": 0,
       "errors": 0
     },
+    "LauncherBrandingTest": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0
+    },
     "LedgerTest": {
       "tests": 16,
       "failures": 0,
@@ -24,11 +29,15 @@
     }
   },
   "releaseLint": "No issues found",
-  "apkSha256": "c3c7952cf732fe2485e4182f2878170b3a04adeaf9ba59aa3c427a8170c1cdeb",
+  "apkSha256": "fad66ec45cc0be80476470aa982da506cee04a8d18d6e16a65bc591ac0a65154",
   "certificateSha256": "9282ebe0b75b45627a4331a936f56f6e8b0e279e2e2569c788fa6ebe01a9eeea",
   "device144HzTested": false,
-  "version": "1.0.2",
-  "versionCode": 3,
+  "version": "1.0.3",
+  "versionCode": 4,
   "navigationBodyDp": 60,
-  "minimumAddTouchTargetDp": 48
+  "minimumAddTouchTargetDp": 48,
+  "applicationLabel": "余白",
+  "launcherIcon": "B - 轻盈钱包",
+  "adaptiveIcon": true,
+  "themedIconResource": true
 }
