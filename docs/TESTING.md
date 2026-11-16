@@ -1,4 +1,4 @@
-# 1.0.0 验证记录
+# 1.0.1 验证记录
 
 日期：2026-11-16。构建环境：Windows、JDK 17、Android SDK 35、AGP 8.9.2、Gradle 8.11.1。
 
@@ -29,7 +29,7 @@
 
 - 签名 Release 构建完成，R8 和资源缩减已开启。
 - `apksigner verify` 通过；RSA 3072 位，APK Signature Scheme v2，适用于最低 Android API 26。
-- 包名 `com.clottins.dailyledger`，版本 `1.0.0 (1)`，min SDK 26，target SDK 35。
+- 包名 `com.clottins.dailyledger`，版本 `1.0.1 (2)`，min SDK 26，target SDK 35。
 - 不包含联网、通讯录或整个存储空间权限。
 - `zipalign -c -P 16 -v 4` 通过。
 - Release 不启用 Debug 演示账目入口，新安装不会自动写入示例账目。

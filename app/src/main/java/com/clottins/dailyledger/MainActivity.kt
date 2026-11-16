@@ -321,7 +321,7 @@ fun LedgerApp(vm: LedgerViewModel) {
                 SettingsRow("完整备份", "JSON", Icons.Outlined.SaveAlt, !busy) {
                     settings = false
                     exportRecovery = false
-                    createJson.launch("日常账本-${LocalDate.now()}.json")
+                    createJson.launch("Yubai-Ledger-${LocalDate.now()}.json")
                 }
                 SettingsRow("导出账目", "CSV", Icons.Outlined.TableChart, !busy) {
                     settings = false
@@ -335,7 +335,7 @@ fun LedgerApp(vm: LedgerViewModel) {
                     SettingsRow("恢复前备份", "JSON", Icons.Outlined.History, !busy) {
                         settings = false
                         exportRecovery = true
-                        createJson.launch("日常账本-恢复前.json")
+                        createJson.launch("Yubai-Ledger-恢复前.json")
                     }
                 Spacer(Modifier.height(14.dp))
                 SmallLabel("账本")
@@ -369,7 +369,7 @@ fun LedgerApp(vm: LedgerViewModel) {
                 csvStart = start
                 csvEnd = end
                 csvDialog = false
-                createCsv.launch("日常账本-${LocalDate.now()}.csv")
+                createCsv.launch("Yubai-Ledger-${LocalDate.now()}.csv")
             },
         )
     plan?.let { preview ->

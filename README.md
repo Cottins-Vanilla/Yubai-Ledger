@@ -1,8 +1,51 @@
-# 日常账本 · Yubai-Ledger
+<p align="center">
+  <img src="docs/assets/logo.svg" width="96" height="96" alt="Yubai Ledger logo">
+</p>
 
-一个以本地数据和清晰收支为中心的 Android 记账应用。由 **Clottins Vanilla** 设计维护，使用 **Kotlin + Jetpack Compose + Room**。
+<h1 align="center">Yubai Ledger</h1>
 
-[下载 APK](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases/latest) · [源码](https://github.com/Cottins-Vanilla/Yubai-Ledger) · [构建说明](docs/BUILD.md) · [退款口径](ACCOUNTING.md)
+<p align="center">简洁、离线、可备份的 Android 记账应用</p>
+
+<p align="center">
+  <a href="https://github.com/Cottins-Vanilla/Yubai-Ledger/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/Cottins-Vanilla/Yubai-Ledger?style=flat-square&amp;label=release"></a>
+  <a href="https://github.com/Cottins-Vanilla/Yubai-Ledger/actions/workflows/android.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Cottins-Vanilla/Yubai-Ledger/android.yml?branch=main&amp;style=flat-square&amp;label=build"></a>
+  <img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat-square&amp;logo=android&amp;logoColor=white">
+  <img alt="Kotlin 2.1.21" src="https://img.shields.io/badge/Kotlin-2.1.21-7F52FF?style=flat-square&amp;logo=kotlin&amp;logoColor=white">
+  <img alt="Jetpack Compose" src="https://img.shields.io/badge/UI-Jetpack_Compose-4285F4?style=flat-square">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/Cottins-Vanilla/Yubai-Ledger?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Cottins-Vanilla/Yubai-Ledger/releases/latest">下载 APK</a> ·
+  <a href="#安装">快速开始</a> ·
+  <a href="#功能">功能</a> ·
+  <a href="#界面预览">界面预览</a> ·
+  <a href="docs/BUILD.md">开发文档</a> ·
+  <a href="https://github.com/Cottins-Vanilla/Yubai-Ledger/issues/new/choose">反馈问题</a>
+</p>
+
+Yubai Ledger 使用 **Kotlin + Jetpack Compose + Room** 构建，以本地账本为核心，提供清晰收支、退款关联与自主备份。由 **Clottins Vanilla** 设计维护，采用 **MIT License**。
+
+> 无需注册 · 本地存储 · 整数金额 · 原生 Android 界面
+
+<details>
+<summary>文档导航</summary>
+
+- [安装与使用](#安装)
+- [功能概览](#功能)
+- [金额和退款口径](ACCOUNTING.md)
+- [备份与恢复](BACKUP.md)
+- [数据格式](docs/DATA_FORMAT.md)
+- [构建与签名](docs/BUILD.md)
+- [架构说明](docs/ARCHITECTURE.md)
+- [验证记录](docs/TESTING.md)
+- [性能与高刷新率](docs/PERFORMANCE.md)
+- [参与贡献](CONTRIBUTING.md)
+- [更新记录](CHANGELOG.md)
+
+</details>
+
+## 界面预览
 
 ![原生明细与统计渲染](docs/screenshots/native-overview.png)
 
@@ -44,7 +87,7 @@
 
 ## 安装
 
-1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `DailyLedger-v1.0.0.apk`。
+1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `Yubai-Ledger-v1.0.1.apk`。
 2. 如系统询问，允许当前下载应用安装未知来源软件，再安装 APK。
 3. 从“设置 → 期初余额”录入现有余额，然后开始记账。
 
@@ -104,6 +147,6 @@ docs/screenshots/      原生 Compose 渲染截图（如生成）
 
 ## 贡献与许可
 
-欢迎提交 Issue 或 Pull Request。请先运行测试与 Lint；修改退款口径时同时更新测试、备份格式和说明。示例文件不要包含真实个人账目。
+欢迎通过 [问题反馈](https://github.com/Cottins-Vanilla/Yubai-Ledger/issues/new/choose) 或 Pull Request 参与改进，提交前请阅读 [贡献指南](CONTRIBUTING.md)。请先运行测试与 Lint；修改退款口径时同时更新测试、备份格式和说明。示例文件不要包含真实个人账目。
 
 源码采用 [MIT License](LICENSE)。依赖信息见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
