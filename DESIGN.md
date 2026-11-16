@@ -193,3 +193,12 @@
 截图：`preview/refund-v1.png`、`preview/refund-picker-v1.png`、`preview/refunded-home-v1.png`、`preview/refund-review-v1.png`。
 
 验证通过：退款只增加余额、不改变收支与图表；整数金额；部分/全退状态；累计限额、日期及原账单类型；编辑排除自身；关联搜索与取消；普通收入隐藏关联；原账单退款标记；明细与统计余额一致；有关联退款的原账单删除及改小金额保护；360px 布局。
+
+
+## 原生技术选型及交付 · 2026-11-16
+
+用户明确选择方案 1：Kotlin + Jetpack Compose + Room；退款关联设计已明确采用。发布账号经用户重新选择，最终确认为 **Cottins-Vanilla**。
+
+原生版本已实现账目、退款、统计、期初余额及备份/恢复。此前每一版网页截图保留作设计历史；最新原生代码的 JVM Android 渲染截图位于 `docs/screenshots/`。它们不是模拟器或真机截图。
+
+验证记录：25 项测试通过，覆盖 MainActivity 启动与记账保存、Activity 重建、Room 回滚、金额/退款/格式及 Compose 交互；Release Lint 无问题；签名与 APK 对齐检查通过。144Hz 真机性能未实测，见 `docs/TESTING.md`。

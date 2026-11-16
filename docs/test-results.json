@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-16",
+  "framework": "Robolectric API 28 and JUnit",
+  "tests": {
+    "AppSmokeTest": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    "DatabaseTest": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    "LedgerTest": {
+      "tests": 16,
+      "failures": 0,
+      "errors": 0
+    },
+    "NativeUiTest": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "releaseLint": "No issues found",
+  "apkSha256": "dd187775e8d1a576f0eca39e8d08c106954e575965ee7f4d84a33a1d6ab1e764",
+  "certificateSha256": "9282ebe0b75b45627a4331a936f56f6e8b0e279e2e2569c788fa6ebe01a9eeea",
+  "device144HzTested": false
+}

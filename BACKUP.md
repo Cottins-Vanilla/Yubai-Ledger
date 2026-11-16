@@ -1,6 +1,6 @@
 # 备份与导出需求
 
-状态：用户已要求加入；当前完成入口设计与格式约定，原生文件读写待实现。
+状态：原生 Android 版本已实现 JSON 完整备份、CSV 导出、导入预览和 Room 事务恢复。
 
 ## JSON 完整备份
 
@@ -12,7 +12,7 @@
 
 支持全部账目或指定日期范围。使用 UTF-8 BOM，便于 Excel 正确识别中文；字段遵循 CSV 引号及换行转义规则。标准列：
 
-`id,date,type,category,amount,note,linkedExpenseId`
+`id,date,type,category,amount,note,linkedExpenseId,time,textEncoding`
 
 其中 `date` 使用 `YYYY-MM-DD`，`type` 为 `income`、`expense` 或 `refund`；`amount` 为正十进制人民币元，最多两位小数，内部转为整数分。收入、支出和退款由 `type` 区分，`linkedExpenseId` 为关联原支出 ID，无关联时留空。退款只影响余额，不进入收入或支出合计。
 
@@ -33,3 +33,5 @@
 实现后需验证：中文/逗号/双引号/换行备注往返、精确金额、JSON 完整恢复、CSV 导出再导入、重复和冲突处理、取消与损坏文件、事务失败回滚。日期范围和总金额应与主页、统计口径一致。
 
 退款关联及导入顺序、缺失原账单、重复 ID、累计退款上限等约定见 `ACCOUNTING.md`；JSON 和 CSV 都必须保留退款类型及关联，不能作为普通收入恢复。
+
+`time` 与 `textEncoding` 是本应用往返导出的扩展列；后者标识公式转义方式，外部文件没有标记时不会删除原始单引号。详细示例与限制见 `docs/DATA_FORMAT.md`。

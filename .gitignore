@@ -6,6 +6,10 @@ local.properties
 *.jks
 *.keystore
 keystore.properties
+.signing/
 *.apk
 *.aab
-tools/
+captures/
+.DS_Store
+
+.kotlin/
