@@ -232,3 +232,7 @@
 用户采用 B「轻盈钱包」并指定安装后名称为“余白”。1.0.3 同步替换桌面图标与 README 标识，保留浅绿背景、深绿钱包和浅绿搭扣。Android 图标前景与背景分层，主体留在自适应安全区域；Android 13+ 增加单色主题资源。仓库名仍为 Yubai-Ledger。
 
 `docs/screenshots/icon-b-preview.png` 展示 Android 资源在 JVM 原生图形环境的渲染与名称排版预览，不是真机桌面截图。
+
+## 底部导航图标回退 · 2026-11-16
+
+1.0.4 按用户要求把「明细」「统计」两个底部导航图标换回 1.0.1 的那一套：Icons.Outlined.Home（房子）与 Icons.AutoMirrored.Outlined.ShowChart（折线图）。1.0.2 与 1.0.3 的 APK 在这两个图标上代码完全相同，所以 1.0.4 只改图标、不动 60dp 导航结构、上浮记账按钮、应用名称、桌面图标、包名与签名。`docs/screenshots/native-app-home.png` 已更新为 1.0.4 渲染。

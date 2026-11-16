@@ -1,1 +1,1 @@
-fad66ec45cc0be80476470aa982da506cee04a8d18d6e16a65bc591ac0a65154  Yubai-Ledger-v1.0.3.apk
+d1aaa96aed162e95d28aabd813d2ec97c103757685220fbb63d673ff2b2253af  Yubai-Ledger-v1.0.4.apk

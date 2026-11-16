@@ -89,7 +89,7 @@
 
 ## 安装
 
-1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `Yubai-Ledger-v1.0.3.apk`。
+1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `Yubai-Ledger-v1.0.4.apk`。
 2. 如系统询问，允许当前下载应用安装未知来源软件，再安装 APK。
 3. 安装后桌面名称为“余白”，图标为 B「轻盈钱包」。从“设置 → 期初余额”录入现有余额，然后开始记账。
 

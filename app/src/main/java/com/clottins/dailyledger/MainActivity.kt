@@ -398,11 +398,11 @@ private fun CompactBottomBar(page: String, onPage: (String) -> Unit) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            NavigationItem("明细", Icons.AutoMirrored.Outlined.ReceiptLong, page == "home") {
-                onPage("home")
-            }
+            NavigationItem("明细", Icons.Outlined.Home, page == "home") { onPage("home") }
             Spacer(Modifier.width(64.dp))
-            NavigationItem("统计", Icons.Outlined.PieChart, page == "stats") { onPage("stats") }
+            NavigationItem("统计", Icons.AutoMirrored.Outlined.ShowChart, page == "stats") {
+                onPage("stats")
+            }
         }
     }
 }
