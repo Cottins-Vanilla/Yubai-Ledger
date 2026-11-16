@@ -24,9 +24,11 @@
     }
   },
   "releaseLint": "No issues found",
-  "apkSha256": "d2ff389685bd2c634c2ae6fd8b543e37576855f0f788460829444716841cdda5",
+  "apkSha256": "c3c7952cf732fe2485e4182f2878170b3a04adeaf9ba59aa3c427a8170c1cdeb",
   "certificateSha256": "9282ebe0b75b45627a4331a936f56f6e8b0e279e2e2569c788fa6ebe01a9eeea",
   "device144HzTested": false,
-  "version": "1.0.1",
-  "versionCode": 2
+  "version": "1.0.2",
+  "versionCode": 3,
+  "navigationBodyDp": 60,
+  "minimumAddTouchTargetDp": 48
 }

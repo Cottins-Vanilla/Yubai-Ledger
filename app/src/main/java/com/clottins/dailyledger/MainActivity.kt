@@ -11,10 +11,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,8 +28,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -113,90 +117,79 @@ fun LedgerApp(vm: LedgerViewModel) {
     }
     if (page != "edit") BackHandler(enabled = page != "home") { page = "home" }
     Surface(Modifier.fillMaxSize(), color = Bg) {
-        Column(Modifier.fillMaxSize().safeDrawingPadding()) {
-            if (!state.ready) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                AnimatedContent(
-                    targetState = page,
-                    modifier = Modifier.weight(1f),
-                    transitionSpec = { fadeIn(tween(150)) togetherWith fadeOut(tween(120)) },
-                    label = "页面切换",
-                ) { current ->
-                    when (current) {
-                        "edit" ->
-                            EditorScreen(
-                                state.entries.find { it.id == editId },
-                                state,
-                                busy,
-                                onBack = {
-                                    page = "home"
-                                    if (editId != null) detailId = editId
-                                },
-                                onSave = { entry ->
-                                    vm.save(entry) {
-                                        dateText = entry.date
+        Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+            Column(Modifier.fillMaxSize()) {
+                if (!state.ready) {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    AnimatedContent(
+                        targetState = page,
+                        modifier = Modifier.weight(1f),
+                        transitionSpec = { fadeIn(tween(150)) togetherWith fadeOut(tween(120)) },
+                        label = "页面切换",
+                    ) { current ->
+                        when (current) {
+                            "edit" ->
+                                EditorScreen(
+                                    state.entries.find { it.id == editId },
+                                    state,
+                                    busy,
+                                    onBack = {
                                         page = "home"
-                                        detailId = null
-                                        editId = null
-                                    }
-                                },
-                            )
-                        "stats" -> StatisticsScreen(state, summary, month, { chooseDate() })
-                        else ->
-                            HomeScreen(
-                                state,
-                                summary,
-                                date,
-                                { chooseDate() },
-                                { settings = true },
-                                { vm.toggleBalance() },
-                                { detailId = it.id },
-                            )
+                                        if (editId != null) detailId = editId
+                                    },
+                                    onSave = { entry ->
+                                        vm.save(entry) {
+                                            dateText = entry.date
+                                            page = "home"
+                                            detailId = null
+                                            editId = null
+                                        }
+                                    },
+                                )
+                            "stats" -> StatisticsScreen(state, summary, month, { chooseDate() })
+                            else ->
+                                HomeScreen(
+                                    state,
+                                    summary,
+                                    date,
+                                    { chooseDate() },
+                                    { settings = true },
+                                    { vm.toggleBalance() },
+                                    { detailId = it.id },
+                                )
+                        }
+                    }
+                    if (page != "edit") CompactBottomBar(page) { page = it }
+                }
+            }
+            if (state.ready && page != "edit") {
+                Box(
+                    Modifier.align(Alignment.BottomCenter)
+                        .offset(y = (-12).dp)
+                        .size(64.dp)
+                        .shadow(4.dp, CircleShape, clip = false)
+                        .background(Bg, CircleShape)
+                        .padding(5.dp)
+                ) {
+                    FilledIconButton(
+                        onClick = {
+                            editId = null
+                            page = "edit"
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                        shape = CircleShape,
+                        colors =
+                            IconButtonDefaults.filledIconButtonColors(
+                                containerColor = Green,
+                                contentColor = Color.White,
+                            ),
+                    ) {
+                        Icon(Icons.Outlined.Add, "记一笔", modifier = Modifier.size(27.dp))
                     }
                 }
-                if (page != "edit")
-                    Row(
-                        Modifier.fillMaxWidth()
-                            .background(Color(0xFFFDFEFA))
-                            .padding(top = 12.dp, bottom = 9.dp),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        NavigationItem("明细", Icons.Outlined.Home, page == "home") { page = "home" }
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            FilledIconButton(
-                                onClick = {
-                                    editId = null
-                                    page = "edit"
-                                },
-                                modifier = Modifier.size(55.dp),
-                                shape = RoundedCornerShape(18.dp),
-                                colors =
-                                    IconButtonDefaults.filledIconButtonColors(
-                                        containerColor = Sage,
-                                        contentColor = Color(0xFF3B5632),
-                                    ),
-                            ) {
-                                Icon(Icons.Outlined.Add, "记一笔", modifier = Modifier.size(28.dp))
-                            }
-                            Text(
-                                "记一笔",
-                                fontSize = 10.sp,
-                                color = Color(0xFF7C9067),
-                                modifier = Modifier.padding(top = 5.dp),
-                            )
-                        }
-                        NavigationItem(
-                            "统计",
-                            Icons.AutoMirrored.Outlined.ShowChart,
-                            page == "stats",
-                        ) {
-                            page = "stats"
-                        }
-                    }
             }
         }
     }
@@ -383,6 +376,38 @@ fun LedgerApp(vm: LedgerViewModel) {
 }
 
 @Composable
+private fun CompactBottomBar(page: String, onPage: (String) -> Unit) {
+    Box(Modifier.fillMaxWidth().height(60.dp).background(Bg).testTag("ledger-bottom-bar")) {
+        Canvas(Modifier.fillMaxWidth().height(1.dp)) {
+            val gap = 40.dp.toPx()
+            drawLine(
+                Line,
+                androidx.compose.ui.geometry.Offset.Zero,
+                androidx.compose.ui.geometry.Offset(size.width / 2 - gap, 0f),
+                1.dp.toPx(),
+            )
+            drawLine(
+                Line,
+                androidx.compose.ui.geometry.Offset(size.width / 2 + gap, 0f),
+                androidx.compose.ui.geometry.Offset(size.width, 0f),
+                1.dp.toPx(),
+            )
+        }
+        Row(
+            Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            NavigationItem("明细", Icons.AutoMirrored.Outlined.ReceiptLong, page == "home") {
+                onPage("home")
+            }
+            Spacer(Modifier.width(64.dp))
+            NavigationItem("统计", Icons.Outlined.PieChart, page == "stats") { onPage("stats") }
+        }
+    }
+}
+
+@Composable
 private fun NavigationItem(
     label: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
@@ -390,18 +415,25 @@ private fun NavigationItem(
     onClick: () -> Unit,
 ) {
     Column(
-        Modifier.width(90.dp)
+        Modifier.width(96.dp)
+            .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(onClick = onClick)
-            .padding(vertical = 8.dp),
+            .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
-        Icon(icon, label, tint = if (selected) Green else Muted, modifier = Modifier.size(23.dp))
+        Icon(
+            icon,
+            label,
+            tint = if (selected) Green else Color(0xFF99998F),
+            modifier = Modifier.size(22.dp),
+        )
+        Spacer(Modifier.height(4.dp))
         Text(
             label,
             fontSize = 10.sp,
-            color = if (selected) Green else Muted,
-            modifier = Modifier.padding(top = 7.dp),
+            lineHeight = 14.sp,
+            color = if (selected) Green else Color(0xFF99998F),
         )
     }
 }

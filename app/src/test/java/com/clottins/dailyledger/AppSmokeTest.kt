@@ -21,6 +21,21 @@ class AppSmokeTest {
         compose.waitUntil(10000) {
             compose.onAllNodesWithText("最近账单").fetchSemanticsNodes().isNotEmpty()
         }
+        val scale = compose.activity.resources.displayMetrics.density
+        val bar = compose.onNodeWithTag("ledger-bottom-bar").fetchSemanticsNode().boundsInRoot
+        val add = compose.onNodeWithContentDescription("记一笔").fetchSemanticsNode().boundsInRoot
+        org.junit.Assert.assertTrue(
+            "Navigation body should be 60dp",
+            kotlin.math.abs(bar.height / scale - 60f) < 1f,
+        )
+        org.junit.Assert.assertTrue("Add button must float above bar", add.top < bar.top)
+        org.junit.Assert.assertTrue(
+            "Add touch target must remain at least 48dp",
+            add.width / scale >= 48f && add.height / scale >= 48f,
+        )
+        compose.onNodeWithContentDescription("统计").performClick()
+        compose.onNodeWithText("收支统计").assertIsDisplayed()
+        compose.onNodeWithContentDescription("明细").performClick()
         compose.onNodeWithContentDescription("记一笔").performClick()
         compose.onNodeWithText("3").performClick()
         compose.onNodeWithText("2").performClick()
