@@ -16,9 +16,16 @@ import org.robolectric.annotation.GraphicsMode
 class AppSmokeTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    /**
+     * Cold CI runners spend seconds unpacking the Robolectric runtime, seeding Room and rendering
+     * the first frame, so the first assertion must not race a fixed ten second budget. Every wait
+     * keeps a generous ceiling and fails only when the UI is genuinely missing.
+     */
+    private val uiTimeoutMs = 60_000L
+
     @Test
     fun launchesSavesAndRestoresEntry() {
-        compose.waitUntil(10000) {
+        compose.waitUntil(uiTimeoutMs) {
             compose.onAllNodesWithText("最近账单").fetchSemanticsNodes().isNotEmpty()
         }
         val scale = compose.activity.resources.displayMetrics.density
@@ -40,7 +47,7 @@ class AppSmokeTest {
         compose.onNodeWithText("3").performClick()
         compose.onNodeWithText("2").performClick()
         compose.onNodeWithText("✓  保存账目").performClick()
-        compose.waitUntil(10000) {
+        compose.waitUntil(uiTimeoutMs) {
             compose.onAllNodesWithText("− 32.00").fetchSemanticsNodes().isNotEmpty()
         }
         compose.onAllNodesWithText("− 32.00").onLast().assertIsDisplayed()
@@ -56,7 +63,7 @@ class AppSmokeTest {
             }
         }
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(10000) {
+        compose.waitUntil(uiTimeoutMs) {
             compose.onAllNodesWithText("− 32.00").fetchSemanticsNodes().isNotEmpty()
         }
         compose.onAllNodesWithText("− 32.00").onLast().assertIsDisplayed()
