@@ -202,3 +202,8 @@
 原生版本已实现账目、退款、统计、期初余额及备份/恢复。此前每一版网页截图保留作设计历史；最新原生代码的 JVM Android 渲染截图位于 `docs/screenshots/`。它们不是模拟器或真机截图。
 
 验证记录：25 项测试通过，覆盖 MainActivity 启动与记账保存、Activity 重建、Room 回滚、金额/退款/格式及 Compose 交互；Release Lint 无问题；签名与 APK 对齐检查通过。144Hz 真机性能未实测，见 `docs/TESTING.md`。
+
+
+## 仓库重命名 · 2026-11-16
+
+按用户要求，将 GitHub 仓库名称由 `DailyLedger` 改为 `Yubai-Ledger`，同步更新 origin 与 README 链接。应用名称、包名、v1.0.0 标签及签名 APK 保持不变。

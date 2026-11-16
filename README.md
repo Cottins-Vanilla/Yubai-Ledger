@@ -1,8 +1,8 @@
-# 日常账本 · DailyLedger
+# 日常账本 · Yubai-Ledger
 
 一个以本地数据和清晰收支为中心的 Android 记账应用。由 **Clottins Vanilla** 设计维护，使用 **Kotlin + Jetpack Compose + Room**。
 
-[下载 APK](https://github.com/Cottins-Vanilla/DailyLedger/releases/latest) · [源码](https://github.com/Cottins-Vanilla/DailyLedger) · [构建说明](docs/BUILD.md) · [退款口径](ACCOUNTING.md)
+[下载 APK](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases/latest) · [源码](https://github.com/Cottins-Vanilla/Yubai-Ledger) · [构建说明](docs/BUILD.md) · [退款口径](ACCOUNTING.md)
 
 ![原生明细与统计渲染](docs/screenshots/native-overview.png)
 
@@ -44,7 +44,7 @@
 
 ## 安装
 
-1. 在 [Releases](https://github.com/Cottins-Vanilla/DailyLedger/releases) 下载 `DailyLedger-v1.0.0.apk`。
+1. 在 [Releases](https://github.com/Cottins-Vanilla/Yubai-Ledger/releases) 下载 `DailyLedger-v1.0.0.apk`。
 2. 如系统询问，允许当前下载应用安装未知来源软件，再安装 APK。
 3. 从“设置 → 期初余额”录入现有余额，然后开始记账。
 
