@@ -25,6 +25,8 @@
 <section class="stat-card"><div class="card-heading"><h2>每日趋势</h2><div class="seg" role="group" aria-label="折线图收支类型"><button class="active" data-mode="expense" onclick="setTrend('expense')">支出</button><button data-mode="income" onclick="setTrend('income')">收入</button></div></div><div class="chart-subline"><span>金额 / 元</span></div><div class="plot" id="plot"><svg class="y-axis" id="y-axis" viewBox="0 0 31 151" aria-hidden="true"></svg><div class="plot-scroll" id="plot-scroll" tabindex="0" role="region" aria-label="每日收支折线图，可横向滚动"><svg id="trend" role="img"><title>每日支出趋势</title></svg></div><div id="point-tooltip" role="status" class="point-tooltip" hidden></div></div></section>
 <section class="stat-card category-card"><div class="card-heading"><h2>分类占比</h2><div class="seg" role="group" aria-label="饼图收支类型"><button class="active" data-cat="expense" onclick="setCategories('expense')">支出</button><button data-cat="income" onclick="setCategories('income')">收入</button></div></div><div class="category-caption">2026年11月 · 全月汇总</div><div class="composition"><div class="donut" id="donut" role="img" aria-label="支出分类环形饼图"><div class="donut-center"><span id="donut-label">总支出</span><b id="donut-total">2,139.50</b><small>人民币 / 元</small></div></div><div class="legend" id="legend"></div></div><div class="category-footer"><span id="category-highlight">餐饮美食占比最高</span><strong id="category-percent">45.0%</strong></div></section><p class="scope-note">示例数据 · 图表可交互预览</p>
 <nav class="nav"><button class="nav-item" onclick="location.href='home.html'"><svg><use href="#home"/></svg>明细</button><div class="center-item"><button class="add" aria-label="记一笔" onclick="location.href='entry.html'"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg></button>记一笔</div><button class="nav-item selected" onclick="location.href='stats.html'"><svg><use href="#chart"/></svg>统计</button><div class="homebar"></div></nav><div class="toast" id="toast" role="status"></div></main>
+<script src="demo-data.js"></script>
+<script src="ledger-rules.js"></script>
 <script>
 const expenseCents=[7800,12500,6200,18800,9500,24000,11000,15800,10000,10000,18000,8500,14000,21000,20000,6850];
 const incomeCents=Array.from({length:16},(_,i)=>i===14?1500000:0);
@@ -70,4 +72,6 @@ scroller.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRi
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopMomentum()});
 let timer;function hint(s){const el=document.getElementById('toast');el.textContent=s;el.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>el.classList.remove('show'),2800)}
 window.addEventListener('resize',renderTrend);renderTrend();setCategories('expense');
+
+if(new URLSearchParams(location.search).get('refundDemo')==='1'){const refundedBalance=window.LedgerRules.totals([window.demoRefundRecord],1286050).balance;document.querySelector('.summary-amount').innerHTML='<small>¥</small>'+(refundedBalance/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});document.querySelector('.nav-item').onclick=()=>location.href='home.html?refundDemo=1';}
 </script></html>

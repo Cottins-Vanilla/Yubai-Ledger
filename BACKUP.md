@@ -12,9 +12,9 @@
 
 支持全部账目或指定日期范围。使用 UTF-8 BOM，便于 Excel 正确识别中文；字段遵循 CSV 引号及换行转义规则。标准列：
 
-`id,date,type,category,amount,note`
+`id,date,type,category,amount,note,linkedExpenseId`
 
-其中 `date` 使用 `YYYY-MM-DD`，`type` 为 `income` 或 `expense`；`amount` 为正十进制人民币元，最多两位小数，内部转为整数分。收入和支出由 `type` 区分。
+其中 `date` 使用 `YYYY-MM-DD`，`type` 为 `income`、`expense` 或 `refund`；`amount` 为正十进制人民币元，最多两位小数，内部转为整数分。收入、支出和退款由 `type` 区分，`linkedExpenseId` 为关联原支出 ID，无关联时留空。退款只影响余额，不进入收入或支出合计。
 
 文字字段应防止表格公式被执行，并约定可逆转义方式，确保本应用导出的 CSV 再导入不会改变备注。CSV 仅包含账目明细，不承担完整设置恢复；换机恢复优先使用 JSON。
 
@@ -31,3 +31,5 @@
 通过 Android 系统文件选择器选择保存和读取位置。取消选择不创建文件、不修改账本。导出及导入处理在后台执行，并提供状态反馈。
 
 实现后需验证：中文/逗号/双引号/换行备注往返、精确金额、JSON 完整恢复、CSV 导出再导入、重复和冲突处理、取消与损坏文件、事务失败回滚。日期范围和总金额应与主页、统计口径一致。
+
+退款关联及导入顺序、缺失原账单、重复 ID、累计退款上限等约定见 `ACCOUNTING.md`；JSON 和 CSV 都必须保留退款类型及关联，不能作为普通收入恢复。
