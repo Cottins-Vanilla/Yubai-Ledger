@@ -1,6 +1,5 @@
 package com.clottins.dailyledger
 
-import android.app.DatePickerDialog
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,7 +33,6 @@ fun EditorScreen(
     onBack: () -> Unit,
     onSave: (Entry) -> Unit,
 ) {
-    val context = LocalContext.current
     var income by
         rememberSaveable(entry?.id) { mutableStateOf(entry?.type != EXPENSE && entry != null) }
     var raw by
@@ -59,6 +56,7 @@ fun EditorScreen(
     val initialTime =
         rememberSaveable(entry?.id) { entry?.time ?: LocalTime.now().toString().take(5) }
     var time by rememberSaveable(entry?.id) { mutableStateOf(initialTime) }
+    var datePicker by rememberSaveable(entry?.id) { mutableStateOf(false) }
     var pendingDate by rememberSaveable(entry?.id) { mutableStateOf<String?>(null) }
     var note by rememberSaveable(entry?.id) { mutableStateOf(entry?.note ?: "") }
     var linked by rememberSaveable(entry?.id) { mutableStateOf(entry?.linkedExpenseId) }
@@ -217,19 +215,7 @@ fun EditorScreen(
             Row(
                 Modifier.fillMaxWidth()
                     .testTag("entry-date-time")
-                    .clickable {
-                        val parsed = LocalDate.parse(date)
-                        DatePickerDialog(
-                                context,
-                                { _, y, m, d ->
-                                    pendingDate = LocalDate.of(y, m + 1, d).toString()
-                                },
-                                parsed.year,
-                                parsed.monthValue - 1,
-                                parsed.dayOfMonth,
-                            )
-                            .show()
-                    }
+                    .clickable { datePicker = true }
                     .padding(vertical = 15.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -356,6 +342,16 @@ fun EditorScreen(
                 enabled = amount > 0 && !busy,
             )
         }
+    }
+    if (datePicker) {
+        LedgerDatePicker(
+            date,
+            onDismiss = { datePicker = false },
+            onConfirm = { selectedDate ->
+                datePicker = false
+                pendingDate = selectedDate
+            },
+        )
     }
     pendingDate?.let { selectedDate ->
         LedgerTimePicker(

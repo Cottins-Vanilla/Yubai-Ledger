@@ -1,7 +1,5 @@
 package com.clottins.dailyledger
 
-import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Surface
@@ -31,11 +29,8 @@ class TimePickerTest {
             LedgerTheme { Surface(color = Bg) { EditorScreen(entry, state, false, {}, onSave) } }
         }
         compose.onNodeWithTag("entry-date-time").performClick()
-        compose.runOnIdle {
-            val dialog = ShadowDialog.getLatestDialog() as DatePickerDialog
-            dialog.datePicker.updateDate(2026, 10, day)
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick()
-        }
+        compose.onNodeWithTag("date-day-2026-11-${day.toString().padStart(2, '0')}").performClick()
+        compose.onNodeWithTag("confirm-date").performClick()
         compose.onNodeWithText("选择时间").assertIsDisplayed()
     }
 

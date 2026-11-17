@@ -1,15 +1,14 @@
-# 余白 1.0.5 · 账目具体时间
+# 余白 1.0.6 · 日期面板与关闭按钮修复
 
-- 新增原生时间滚轮：日期点击“确定”后选择小时和分钟，确认后一起回填。
-- 时间范围 00:00–23:59，支持 23↔00、59↔00 双向循环、惯性滑动及居中吸附。
-- 使用确认的 38sp 数字、68dp 行距及较淡的相邻数字，突出选中时间。
-- 编辑已有账目读取原时间，取消选择保留原日期和时间；仅改时间也有未保存提醒。
-- 31 项本地测试和 Release Lint 通过，包含循环、触摸、保存、取消、旧账本保留和 JSON / CSV 时间往返。
+- 编辑账目的日期选择改为与 HTML 预览相符的浅色底部日历，去掉系统居中弹窗和大绿色日期头。
+- 日历周日开头，支持月份切换、跨年、闰年；日期确认后继续选择具体时间。
+- 修复日期和时间面板 X 按钮顶部裁切，使用 48dp 点击区域和独立的 40dp 圆形背景。
+- rc2 修复代码已获用户真机验证通过；正式版修复代码完全相同，仅调整版本号重新打包。
 
-覆盖更新：沿用原包名和签名，Room schema 仍为 1，复用已有时间字段。直接安装本 APK 更新，避免先卸载或清除应用数据。建议更新前导出一次 JSON 完整备份。
+35 项本地自动化测试与 Release Lint 通过，包含高密度关闭按钮圆弧检查、日期到时间流程、取消回滚和账目保留测试。
 
-[覆盖更新说明](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/UPGRADING.md) · [原生弹层截图](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/screenshots/native-time-picker.png)
+沿用原包名、签名、数据库和时间字段，可直接覆盖旧版及 rc1/rc2 更新。不要在未备份时卸载或清除应用数据。
 
-原生截图来自 JVM Android 图形渲染；尚未进行手机 APK 覆盖安装和 144Hz 帧耗时实测。
+[日期面板预览](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/screenshots/native-date-sheet.png) · [验证记录](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/TESTING.md) · [更新说明](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/UPGRADING.md)
 
-SHA-256：4a8ce0c3a575ac0090e2455cd1b1686d657bfe342f39f10d6c2bcf3b0180cbc4
+SHA-256：77e8a0d0f8e992c24bf964fd30c86faeef1d16621444bd759b7b10c04f38ad0f

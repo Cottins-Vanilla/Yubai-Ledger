@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -90,17 +87,7 @@ internal fun LedgerTimePicker(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text("选择时间", fontSize = 21.sp, fontWeight = FontWeight.SemiBold, color = Ink)
-                IconButton(
-                    onClick = onDismiss,
-                    modifier = Modifier.size(40.dp).background(Color(0xFFEAF0E3), CircleShape),
-                ) {
-                    Icon(
-                        Icons.Outlined.Close,
-                        "取消时间选择",
-                        tint = Muted,
-                        modifier = Modifier.size(20.dp),
-                    )
-                }
+                SheetCloseButton("取消时间选择", onDismiss)
             }
             Text(
                 date.replaceFirst("-", "年").replaceFirst("-", "月") + "日",

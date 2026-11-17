@@ -12,6 +12,11 @@
       "failures": 0,
       "errors": 0
     },
+    "DatePickerTest": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
     "LauncherBrandingTest": {
       "tests": 1,
       "failures": 0,
@@ -27,6 +32,11 @@
       "failures": 0,
       "errors": 0
     },
+    "SheetCloseButtonTest": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0
+    },
     "TimePersistenceTest": {
       "tests": 1,
       "failures": 0,
@@ -39,11 +49,11 @@
     }
   },
   "releaseLint": "No issues found",
-  "apkSha256": "4a8ce0c3a575ac0090e2455cd1b1686d657bfe342f39f10d6c2bcf3b0180cbc4",
+  "apkSha256": "77e8a0d0f8e992c24bf964fd30c86faeef1d16621444bd759b7b10c04f38ad0f",
   "certificateSha256": "9282ebe0b75b45627a4331a936f56f6e8b0e279e2e2569c788fa6ebe01a9eeea",
   "device144HzTested": false,
-  "version": "1.0.5",
-  "versionCode": 6,
+  "version": "1.0.6",
+  "versionCode": 9,
   "navigationBodyDp": 60,
   "minimumAddTouchTargetDp": 48,
   "applicationLabel": "余白",
@@ -66,5 +76,21 @@
   },
   "databaseSchema": 1,
   "existingFileDatabaseReopenTested": true,
-  "deviceApkUpgradeTested": false
+  "deviceApkUpgradeTested": false,
+  "approvedRc2CodeMatchesRelease": true,
+  "deviceUiFeedback": {
+    "version": "1.0.6-rc2",
+    "status": "passed_by_user",
+    "scope": [
+      "date picker appearance",
+      "close button clipping"
+    ],
+    "date": "2026-11-17"
+  },
+  "datePickerStyle": "Compose bottom sheet, Sunday first",
+  "closeButton": {
+    "touchTargetDp": 48,
+    "discDp": 40,
+    "highDensityCapsChecked": true
+  }
 }
