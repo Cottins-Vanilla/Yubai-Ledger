@@ -236,3 +236,11 @@
 ## 底部导航图标回退 · 2026-11-16
 
 1.0.4 按用户要求把「明细」「统计」两个底部导航图标换回 1.0.1 的那一套：Icons.Outlined.Home（房子）与 Icons.AutoMirrored.Outlined.ShowChart（折线图）。1.0.2 与 1.0.3 的 APK 在这两个图标上代码完全相同，所以 1.0.4 只改图标、不动 60dp 导航结构、上浮记账按钮、应用名称、桌面图标、包名与签名。`docs/screenshots/native-app-home.png` 已更新为 1.0.4 渲染。
+
+## 具体时间选择 · 2026-11-17
+
+用户确认先通过 HTML 预览再接入原生应用。最终采用第三版比例：数字 38sp、相邻行中心距离 68dp、选中背景高 52dp；相邻数字缩小和淡化。保留原 DatePickerDialog，日期点击“确定”后打开浅色时间底部弹层，时间确认后一起回填。取消时间弹层保留原日期、时间。
+
+使用 Compose LazyColumn 与原生 SnapFlingBehavior，依赖系统帧同步，不设置固定帧率。以重复索引映射小时/分钟，在 23/00、59/00 间连续滑动；只创建可见项，滚动缩放在 graphicsLayer 更新。支持触摸、点击相邻数字和无障碍增减操作。
+
+沿用 Entry.time 和 Room schema 1。编辑保留记录 ID，原数据和退款关联不会因时间选择而重建。HTML 设计记录为 preview/time-picker.html；原生截图为 docs/screenshots/native-time-picker.png。

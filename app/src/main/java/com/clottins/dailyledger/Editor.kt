@@ -19,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
+import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,11 +50,16 @@ fun EditorScreen(
         rememberSaveable(entry?.id) {
             mutableStateOf(if (entry?.type != EXPENSE && entry != null) entry.category else "工资收入")
         }
-    var incomeCategoryType by rememberSaveable(entry?.id) {
-        mutableStateOf(if(entry!=null && entry.type!=EXPENSE) entry.type else INCOME)
-    }
+    var incomeCategoryType by
+        rememberSaveable(entry?.id) {
+            mutableStateOf(if (entry != null && entry.type != EXPENSE) entry.type else INCOME)
+        }
     var date by
         rememberSaveable(entry?.id) { mutableStateOf(entry?.date ?: LocalDate.now().toString()) }
+    val initialTime =
+        rememberSaveable(entry?.id) { entry?.time ?: LocalTime.now().toString().take(5) }
+    var time by rememberSaveable(entry?.id) { mutableStateOf(initialTime) }
+    var pendingDate by rememberSaveable(entry?.id) { mutableStateOf<String?>(null) }
     var note by rememberSaveable(entry?.id) { mutableStateOf(entry?.note ?: "") }
     var linked by rememberSaveable(entry?.id) { mutableStateOf(entry?.linkedExpenseId) }
     var picker by remember { mutableStateOf(false) }
@@ -70,6 +77,7 @@ fun EditorScreen(
     val dirty =
         raw != (entry?.let { Ledger.rawMoney(it.cents) } ?: "0") ||
             note != (entry?.note ?: "") ||
+            time != initialTime ||
             date != (entry?.date ?: LocalDate.now().toString()) ||
             type != (entry?.type ?: EXPENSE) ||
             categoryName != (entry?.category ?: "餐饮美食") ||
@@ -175,7 +183,11 @@ fun EditorScreen(
                                 .padding(vertical = 2.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            IconTile(cat.icon, Modifier.size(40.dp), selected = categoryName == cat.name && cat.type == type)
+                            IconTile(
+                                cat.icon,
+                                Modifier.size(40.dp),
+                                selected = categoryName == cat.name && cat.type == type,
+                            )
                             Spacer(Modifier.height(5.dp))
                             Text(
                                 cat.name
@@ -190,7 +202,9 @@ fun EditorScreen(
                                     .ifEmpty { cat.name }
                                     .let { if (it.length > 4) it.take(4) else it },
                                 fontSize = 10.sp,
-                                  color = if (cat.name == categoryName && cat.type == type) Green else Muted,
+                                color =
+                                    if (cat.name == categoryName && cat.type == type) Green
+                                    else Muted,
                             )
                         }
                     }
@@ -202,11 +216,14 @@ fun EditorScreen(
             HorizontalDivider(color = Line)
             Row(
                 Modifier.fillMaxWidth()
+                    .testTag("entry-date-time")
                     .clickable {
                         val parsed = LocalDate.parse(date)
                         DatePickerDialog(
                                 context,
-                                { _, y, m, d -> date = LocalDate.of(y, m + 1, d).toString() },
+                                { _, y, m, d ->
+                                    pendingDate = LocalDate.of(y, m + 1, d).toString()
+                                },
                                 parsed.year,
                                 parsed.monthValue - 1,
                                 parsed.dayOfMonth,
@@ -225,7 +242,7 @@ fun EditorScreen(
                 Spacer(Modifier.width(10.dp))
                 SmallLabel("日期")
                 Spacer(Modifier.weight(1f))
-                Text(date.replace('-', '/'), fontSize = 11.sp, color = Green)
+                Text(date.replace('-', '/') + "  " + time, fontSize = 11.sp, color = Green)
             }
             HorizontalDivider(color = Line)
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -330,7 +347,7 @@ fun EditorScreen(
                             cents = amount,
                             category = categoryName,
                             date = date,
-                            time = entry?.time ?: java.time.LocalTime.now().toString().take(5),
+                            time = time,
                             note = note,
                             linkedExpenseId = if (type == REFUND) linked else null,
                         )
@@ -339,6 +356,18 @@ fun EditorScreen(
                 enabled = amount > 0 && !busy,
             )
         }
+    }
+    pendingDate?.let { selectedDate ->
+        LedgerTimePicker(
+            selectedDate,
+            time,
+            onDismiss = { pendingDate = null },
+            onConfirm = { selectedTime ->
+                date = selectedDate
+                time = selectedTime
+                pendingDate = null
+            },
+        )
     }
     if (leave)
         AlertDialog(
