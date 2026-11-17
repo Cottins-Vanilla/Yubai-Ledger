@@ -253,3 +253,12 @@
 关闭按钮修正为完整 48dp 触控容器，内部以明确圆形裁切绘制 40dp 背景，避免较小 IconButton 约束与最小点击区域冲突造成顶部裁切。日期和时间面板共用 SheetCloseButton。增加高密度原生像素检查，确认上下圆弧完整且按钮保持足够触控范围。
 
 用户安装 rc2 后反馈“通过”，随后授权本地 Git 和 GitHub 发布。1.0.6 保留通过验收的全部修复代码，只调整版本号为正式版。未上传用户提供的真机截图；仓库界面图来自自动化测试渲染。
+
+
+## 时间滚轮与面板的手势隔离 · 2026-11-17
+
+用户反馈向下调整时间时卡片跟着下移。回归测试确认：数字列内部的行间空白本身可正常滚动，但列旁边/单位区域的空白没有处理拖动，底部面板会接管手势。修复前测试中面板顶部从 499px 变成 563px。
+
+在时间面板内容上增加垂直拖动处理：子 LazyColumn 优先消费滚动；未被子控件消费的空白拖动在内容层消费，避免传给面板。NestedScrollConnection 在 post-scroll/post-fling 阶段消费剩余垂直位移与速度，不抢走滚轮本身的滚动。保留顶部把手、遮罩、返回键和关闭按钮的原有行为，未升级依赖或修改视觉布局。实现依据：[Android 手势检测](https://developer.android.com/reference/kotlin/androidx/compose/foundation/gestures/package-summary)、[嵌套滚动](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/nestedscroll/NestedScrollConnection)。
+
+新增两项回归测试：空白/单位区域拖动中及松手后面板位置不变；小时、分钟数字行间空白拖动仍改变选中值且面板不移动。

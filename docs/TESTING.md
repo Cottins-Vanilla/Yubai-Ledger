@@ -1,10 +1,10 @@
-# 1.0.6 验证记录
+# 1.0.7 验证记录
 
 日期：2026-11-17。构建环境：Windows、JDK 17、Android SDK 35、AGP 8.9.2、Gradle 8.11.1。
 
 ## 自动化结果
 
-**35 项测试通过，0 失败、0 错误。Release Lint：No issues found。**
+**37 项测试通过，0 失败、0 错误。Release Lint：No issues found。**
 
 | 测试组 | 数量 | 内容 |
 |---|---:|---|
@@ -14,13 +14,18 @@
 | LauncherBrandingTest | 1 | 从 Manifest 读取“余白”显示名、保持原包名、自适应图标加载和原生图形渲染 |
 | DatePickerTest | 3 | 周日开始、闰年及六行月份、底部日历布局、跨年切换、取消保留原账目 |
 | SheetCloseButtonTest | 1 | 高密度日期与时间面板的关闭按钮完整圆弧、顶部与底部留白、48dp 触控范围 |
+| WheelGestureTest | 2 | 空白和单位区域拖动中/松手后面板不移动；两列行间空白仍能调整时间 |
 | TimePickerTest | 4 | 日期确认后打开时间、回填保存原 ID、双向循环、触摸滚动、取消回滚、仅改时间的未保存提示 |
 | TimePersistenceTest | 1 | 文件数据库关闭重开后保留旧记录，修改时间不丢退款关联/分类/设置，JSON 和 CSV 时间往返 |
 | AppSmokeTest | 1 | 实际 MainActivity 启动、60dp 导航及上浮位置、至少 48dp 触控范围、页面切换、UI 录入并通过 Room 保存，Activity 重建后继续读取记录 |
 
 数据库和 UI 测试运行在 Robolectric Android API 28 环境；不是模拟器安装或真机测试。UI 使用原生 Compose 代码，通过 Android 原生图形模式渲染并检查交互。
 
-## 用户真机反馈
+## 手势问题修复证据
+
+在旧代码加上同一回归测试后，`blankBesideColumnsDoesNotPullDownSheet` 失败：拖动中面板顶部从 499px 变成 563px。应用修复后两项手势测试通过，原有 35 项测试继续通过。测试来自 JVM Android 环境，本版手势修复尚无用户真机验收结果。
+
+## 1.0.6 用户真机反馈
 
 用户在 2026-11-17 对 rc2 修复反馈“通过”，随后授权提交发布。验收针对日期面板外观和关闭按钮显示；未提供设备型号、Android 版本、144Hz 帧耗时或完整账本核对记录。正式版与 rc2 修复代码一致，仅调整版本号与签名打包。
 
@@ -41,7 +46,7 @@
 
 - 签名 Release 构建完成，R8 和资源缩减已开启。
 - `apksigner verify` 通过；RSA 3072 位，APK Signature Scheme v2，适用于最低 Android API 26。
-- 包名 `com.clottins.dailyledger`，版本 `1.0.6 (9)`，min SDK 26，target SDK 35。
+- 包名 `com.clottins.dailyledger`，版本 `1.0.7 (10)`，min SDK 26，target SDK 35。
 - 应用显示名“余白”，采用 B「轻盈钱包」；包含 API 26 自适应和 API 33 单色主题资源。
 - 不包含联网、通讯录或整个存储空间权限。
 - `zipalign -c -P 16 -v 4` 通过。

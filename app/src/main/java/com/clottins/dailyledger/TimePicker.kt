@@ -2,6 +2,7 @@ package com.clottins.dailyledger
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,12 +14,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalTime
@@ -74,13 +81,37 @@ internal fun LedgerTimePicker(
     val initial = remember(initialTime) { LocalTime.parse(initialTime) }
     val hours = rememberClockWheel(24, initial.hour)
     val minutes = rememberClockWheel(60, initial.minute)
+    // The infinite wheels consume their own scroll. Stop any remaining vertical
+    // scroll/fling here so it cannot turn into a drag of the surrounding sheet.
+    val scrollBoundary = remember {
+        object : NestedScrollConnection {
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource,
+            ) = Offset(0f, available.y)
+
+            override suspend fun onPostFling(consumed: Velocity, available: Velocity) =
+                Velocity(0f, available.y)
+        }
+    }
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = Bg,
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
     ) {
-        Column(Modifier.fillMaxWidth().padding(24.dp, 0.dp, 24.dp, 24.dp)) {
+        Column(
+            Modifier.fillMaxWidth()
+                .testTag("time-picker-content")
+                .nestedScroll(scrollBoundary)
+                .pointerInput(Unit) {
+                    // Child LazyColumns get first chance to scroll. A drag starting
+                    // on the gaps/units/padding is consumed instead of moving the sheet.
+                    detectVerticalDragGestures { change, _ -> change.consume() }
+                }
+                .padding(24.dp, 0.dp, 24.dp, 24.dp)
+        ) {
             Row(
                 Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -96,7 +127,10 @@ internal fun LedgerTimePicker(
                 modifier = Modifier.padding(top = 8.dp),
             )
             Box(
-                Modifier.fillMaxWidth().padding(top = 20.dp, bottom = 16.dp).height(304.dp),
+                Modifier.fillMaxWidth()
+                    .testTag("time-wheel-panel")
+                    .padding(top = 20.dp, bottom = 16.dp)
+                    .height(304.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Box(

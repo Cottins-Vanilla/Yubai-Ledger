@@ -1,14 +1,12 @@
-# 余白 1.0.6 · 日期面板与关闭按钮修复
+# 余白 1.0.7 · 时间滚轮手势修复
 
-- 编辑账目的日期选择改为与 HTML 预览相符的浅色底部日历，去掉系统居中弹窗和大绿色日期头。
-- 日历周日开头，支持月份切换、跨年、闰年；日期确认后继续选择具体时间。
-- 修复日期和时间面板 X 按钮顶部裁切，使用 48dp 点击区域和独立的 40dp 圆形背景。
-- rc2 修复代码已获用户真机验证通过；正式版修复代码完全相同，仅调整版本号重新打包。
+- 修复从时间滚轮旁边、时/分单位区域及内容空白处上下拖动时，整个底部面板跟随移动的问题。
+- 数字行间空白仍可上下滚动，保留惯性吸附、小时和分钟首尾循环。
+- 隔离滚轮剩余滚动/惯性事件，避免转为面板拖动；关闭按钮、点击遮罩、返回键和顶部把手保持原有行为。
+- 37 项本地测试与 Release Lint 通过。新增回归测试同时检查按住拖动中和松手后的面板位置，以及两列数字间隙仍能调整时间。
 
-35 项本地自动化测试与 Release Lint 通过，包含高密度关闭按钮圆弧检查、日期到时间流程、取消回滚和账目保留测试。
+修复前已复现空白区域拖动令面板下移；同一操作在修复后位置保持。该证据来自 Robolectric Android 测试环境，本版手势修复尚待更多真机反馈。
 
-沿用原包名、签名、数据库和时间字段，可直接覆盖旧版及 rc1/rc2 更新。不要在未备份时卸载或清除应用数据。
+沿用原包名、签名和数据库，支持覆盖更新并保留已有账目。
 
-[日期面板预览](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/screenshots/native-date-sheet.png) · [验证记录](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/TESTING.md) · [更新说明](https://github.com/Cottins-Vanilla/Yubai-Ledger/blob/main/docs/UPGRADING.md)
-
-SHA-256：77e8a0d0f8e992c24bf964fd30c86faeef1d16621444bd759b7b10c04f38ad0f
+SHA-256：5c37882ad9ff0267dfae6ff1b310d708ee568a871b8f1e30d22ccaf59c05ca85
